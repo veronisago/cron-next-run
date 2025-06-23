@@ -1,4 +1,4 @@
-import cronParser from 'cron-parser';
+import { CronExpressionParser } from 'cron-parser';
 
 export default function handler(req, res) {
   if (req.method === 'GET') {
@@ -24,7 +24,7 @@ export default function handler(req, res) {
       return res.status(400).json({ error: 'input must be a cron string' });
     }
     try {
-      const interval = cronParser.parseExpression(input);
+      const interval = CronExpressionParser.parse(input);
       const next = interval.next().toISOString();
       return res.json({ output: next });
     } catch {
